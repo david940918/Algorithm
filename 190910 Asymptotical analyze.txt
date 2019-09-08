@@ -1,0 +1,129 @@
+1. 알고리즘의 효율을 점근적(Asymptotically) 분석하는데 따른 제약들을 설명하라.
+
+알고리즘의 효율이란, 공간적 / 시간적 효율성으로 나뉜다.
+공간적 효율성이란 메모리 공간의 효율을 의미한다.
+시간적 효율성이란 요구하는 시간의 크기를 의미한다.
+
+반대로 효율성을 뒤집어 복잡도(Complexity)라고 하며, 이를 더 많이 사용한다.
+
+시간적 복잡도는 하드웨어 환경, 소프트웨어 환경에 따라 처리 시간이 달라져 분석이 어렵다.
+
+<점근적 분석>
+이 환경에 의한 차이(환경변수)를 무시하기 위해 입력 데이터의 수(N)을 무한대로 설정한다.
+이러할 때의 시간적 복잡도 분석은 다음과 같다.
+
+(할당 시간 : a, 비교 시간 : b, 출력 시간 : c, 연산 시간 : d 라 가정)
+void printNtime(){
+	int i = 0;			=> a			
+	while( i < n ){		=> b x n
+		printf( "%d\n", i );	=> c x n
+		i = i + 1;		=> a x n, d x n
+	}
+}
+
+총 실행시간 = (a + b + c + d) x n + a, 이때 n은 무한대이므로 a는 생략.
+n의 계수도 생략. 실행시간 N에 비례하는 알고리즘이다.
+
+--------------------------------------------------------------------------------------------------
+
+Factors that determine prog. performance
+
+1. Algs & DS ( major factor )	-> why?
+2. Hardware
+3. Compiler (gcc, vs etc)
+4. Prog. lang.
+5. OS
+
+consider merge sort with running time -> O(nlogn)
+compared to insertion sort with running time -> O(n^2)
+
+ms : is = o(nlogn) : n^2
+
+merge sort is faster by (n^2 / nlogn) = n / logn = speedup
+
+For n = 1000 : speedup = 1000 / log2(1000) ~~ 1000 / 10 = 100
+merge sort is faster by 100 times
+
+---------------------------------------------------------------------------
+
+Asymptotic Complexity를 분석하는데 따른 제약들.(Limitation of Asymptotic Notation)
+
+1) we are assuming that all operations take the same amount of time, (approximation)
+big o 표기법은 x좌표에 input size, y좌표에 operation(산술논리 연산 등)를 표기한다.
+다만 여기에는 add, sub, compare, store/assign, load 등의 기초 연산이 있는데,
+구조적으로 add, sub는 2~3cycle이면 수행되지만, store/assign 등의 메인메모리에 이동이 필요한
+SEQ들은 100cycle도 요구된다. 이러한 차이들을 제하고 전부 동일하다 가정하는 것이다.
+"different operations take diff amounts of time, depending on what kind of operation, what kind of hw,
+in AC, we are not accounting for any of these."
+
+As a result, We assume that all ops take the same amount of time.
+
+2) We dont model memory & caching (좀 더 조사해보자)
+즉, 메모리와 캐시 영역을 고려하지 않은 것이다. 메모리 영역의 것을 캐시로 불러오는 시간 등등
+
+3) We ignore constants & lower order terms
+	ex) T(n) = 4n^2 + 6n + 10   ==>  T(n) = O(n^2)
+
+not give us precise, actual execution time.
+
+why we care about larger N? 
+what is big n small.
+If we have a 1Ghz processor, this processor will do 10^9cycles/s
+
+If we assume that on avg, an op takes 10 cycles
+then this processor will execute 10^9/10 = 10^8 ops/s
+this is very big number...
+everything less than this is fractional, we hardly feel any diff between two.
+we do feel or not feel~
+
+
+
+--------------------------------------------------------------------------------------------------------------
+
+<Subset Sum Problem> 을 정의하고, 해당 문제를 풀기위한 알고리즘을 설명해 보라.
+또 그 알고리즘의 실행시간에 대해서도 설명해 보라.
+일반적인 O(n^2)알고리즘의 실행시간에 대해서도 설명해 보라. 
+t = num of ops/ speed
+1K = 2^10 ~ 10^3
+1M = 2^20 ~ 10^6
+1G = 2^30 ~ 10^9
+
+accepting approximation, simple example
+
+Subset sum problem(부분집합 합 알고리즘)
+Given a set S of integers and a target integer(대상 정수) T,
+determine if S has a subset that sums to T exactly.
+정수 세트 S와 목표 정수 T가 주어지면,
+S에 정확히 T의 합집합이 있는지 확인하십시오.
+
+예를 들어, S = {2, 3, 4, 8}이고 T = 7라면 해당 부분집합 3, 4를 찾을 수 있다.
+T = 9라면 {2, 3, 4}, T = 11라면 {3, 8}
+
+이 알고리즘의 목적은 set S를 주고 target T를 주면 알고리즘은 yes 나 no를 출력하고 해당 부분집합을 보이는 것이다.
+
+In general, need to check every combination(subset)
+For a set of size n, we have 2^n subsets. because each element have two possibilities. O(2^n)
+
+----------------------------------------------------------------------------------------------------------------------
+
+<Insertion Sort>
+
+예를 들어 이중 for문일 경우,
+
+최소 복잡도 : 빅 오메가(n), 왜냐하면 외부 for문은 무조건 돌 것이므로,
+최대 복잡도 : 빅 오(n^2), 이중 for문을 모두 돌 경우.
+만약 정확한 실행시간을 알 수 있다면 빅 세타를 사용한다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
